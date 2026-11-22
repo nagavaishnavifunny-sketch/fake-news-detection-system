@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TruthEye - Fake News Detector</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f1f5fb;
+    color: #1e293b;
+}
+
+/* LOGIN AND REGISTER */
+
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(135deg,#102b50,#087f8c);
+}
+
+.auth-box {
+    width: 100%;
+    max-width: 420px;
+    background: white;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.2);
+}
+
+.auth-box h1 {
+    text-align: center;
+    color: #102b50;
+    margin-bottom: 10px;
+}
+
+.auth-box h1 span {
+    color: #087f8c;
+}
+
+.auth-box p {
+    text-align: center;
+    color: #64748b;
+    margin-bottom: 25px;
+}
+
+.auth-box input {
+    width: 100%;
+    padding: 13px;
+    margin-bottom: 15px;
+    border: 1px solid #dbe4ef;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.auth-box button {
+    width: 100%;
+    padding: 14px;
+    background: #087f8c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.auth-box button:hover {
+    background: #075d69;
+}
+
+.auth-box .switch {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.auth-box a {
+    color: #087f8c;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.auth-message {
+    color: #dc2626;
+    font-size: 14px;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+/* MAIN WEBSITE */
+
+#mainWebsite {
+    display: none;
+}
+
+header {
+    background: #102b50;
+    color: white;
+    padding: 22px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #38d9c2;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 22px;
+}
+
+nav button {
+    padding: 9px 15px;
+    background: #38d9c2;
+    color: #102b50;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.hero {
+    text-align: center;
+    padding: 65px 20px 35px;
+}
+
+.hero h1 {
+    font-size: 38px;
+    color: #102b50;
+    margin-bottom: 15px;
+}
+
+.hero h1 span {
+    color: #087f8c;
+}
+
+.hero p {
+    max-width: 650px;
+    margin: auto;
+    line-height: 1.7;
+    color: #64748b;
+}
+
+.container {
+    max-width: 750px;
+    margin: 25px auto 55px;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+}
+
+.container h2 {
+    margin-bottom: 12px;
+    color: #102b50;
+}
+
+.container p {
+    color: #64748b;
+    margin-bottom: 15px;
+}
+
+textarea {
+    width: 100%;
+    height: 170px;
+    padding: 15px;
+    border: 2px solid #dbe4ef;
+    border-radius: 10px;
+    resize: vertical;
+    font-size: 15px;
+    outline: none;
+}
+
+textarea:focus {
+    border-color: #087f8c;
+}
+
+.analyze-btn {
+    background: #087f8c;
+    color: white;
+    border: none;
+    padding: 14px 25px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 18px;
+}
+
+#result {
+    display: none;
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 10px;
+    line-height: 1.7;
+}
+
+#result h3 {
+    margin-bottom: 8px;
+}
+
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 20px;
+    margin-bottom: 35px;
+}
+
+.feature {
+    background: white;
+    padding: 25px;
+    width: 220px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+}
+
+.feature h3 {
+    color: #087f8c;
+    margin-bottom: 10px;
+}
+
+footer {
+    background: #102b50;
+    color: white;
+    text-align: center;
+    padding: 22px;
+}
+
+@media(max-width:600px) {
+    header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    nav a {
+        margin: 8px;
+    }
+
+    .hero h1 {
+        font-size: 29px;
+    }
+
+    .container {
+        margin: 20px 12px 40px;
+        padding: 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN PAGE -->
+
+<section class="auth-page" id="loginPage">
+
+<div class="auth-box">
+
+<h1>Truth<span>Eye</span></h1>
+
+<p>Welcome back! Login to continue.</p>
+
+<div class="auth-message" id="authMessage"></div>
+
+<form onsubmit="loginUser(event)">
+
+<input type="email" id="loginEmail"
+placeholder="Enter your email" required>
+
+<input type="password" id="loginPassword"
+placeholder="Enter your password" required>
+
+<button type="submit">Login</button>
+
+</form>
+
+<p class="switch">
+Don't have an account?
+<a onclick="showRegister()">Register</a>
+</p>
+
+</div>
+</section>
+
+<!-- REGISTER PAGE -->
+
+<section class="auth-page" id="registerPage"
+style="display:none;">
+
+<div class="auth-box">
+
+<h1>Truth<span>Eye</span></h1>
+
+<p>Create your new account.</p>
+
+<div class="auth-message" id="registerMessage"></div>
+
+<form onsubmit="registerUser(event)">
+
+<input type="text" id="regName"
+placeholder="Full Name" required>
+
+<input type="email" id="regEmail"
+placeholder="Email Address" required>
+
+<input type="password" id="regPassword"
+placeholder="Create Password" minlength="6" required>
+
+<input type="password" id="confirmPassword"
+placeholder="Confirm Password" minlength="6" required>
+
+<button type="submit">Create Account</button>
+
+</form>
+
+<p class="switch">
+Already have an account?
+<a onclick="showLogin()">Login</a>
+</p>
+
+</div>
+</section>
+
+<!-- MAIN TRUTHEYE WEBSITE -->
+
+<div id="mainWebsite">
+
+<header>
+
+<div class="logo">Truth<span>Eye</span></div>
+
+<nav>
+<a href="#home">Home</a>
+<a href="#detector">Detector</a>
+<a href="#about">About</a>
+<button onclick="logoutUser()">Logout</button>
+</nav>
+
+</header>
+
+<section class="hero" id="home">
+
+<h1>
+Stop Fake News.<br>
+<span>Start Sharing Truth.</span>
+</h1>
+
+<p>
+Welcome to TruthEye! Analyze news content,
+identify suspicious claims and think before
+sharing information online.
+</p>
+
+</section>
+
+<section class="container" id="detector">
+
+<h2>🔍 Fake News Detection</h2>
+
+<p>
+Paste a news headline or article below to
+perform a basic text-pattern analysis.
+</p>
+
+<textarea id="newsText"
+placeholder="Paste your news article or headline here..."></textarea>
+
+<button class="analyze-btn" onclick="detectNews()">
+Analyze News
+</button>
+
+<div id="result"></div>
+
+</section>
+
+<section class="features" id="about">
+
+<div class="feature">
+<h3>⚡ Quick Analysis</h3>
+<p>Analyze submitted news text within seconds.</p>
+</div>
+
+<div class="feature">
+<h3>🛡️ Awareness</h3>
+<p>Identify suspicious wording and claims.</p>
+</div>
+
+<div class="feature">
+<h3>📚 Better Decisions</h3>
+<p>Encourage users to verify information before sharing.</p>
+</div>
+
+</section>
+
+<footer>
+<p>© 2026 TruthEye | Think Before You Share!</p>
+</footer>
+
+</div>
+
+<script>
+
+// PAGE NAVIGATION
+
+function showRegister() {
+    document.getElementById("loginPage").style.display = "none";
+    document.getElementById("registerPage").style.display = "flex";
+}
+
+function showLogin() {
+    document.getElementById("registerPage").style.display = "none";
+    document.getElementById("loginPage").style.display = "flex";
+}
+
+// REGISTRATION
+
+function registerUser(event) {
+
+    event.preventDefault();
+
+    let name = document.getElementById("regName").value.trim();
+    let email = document.getElementById("regEmail").value.trim().toLowerCase();
+    let password = document.getElementById("regPassword").value;
+    let confirm = document.getElementById("confirmPassword").value;
+
+    let message = document.getElementById("registerMessage");
+
+    if (password !== confirm) {
+        message.innerText = "Passwords do not match!";
+        return;
+    }
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    if (users.some(user => user.email === email)) {
+        message.innerText = "Email already registered!";
+        return;
+    }
+
+    users.push({
+        name: name,
+        email: email,
+        password: password
+    });
+
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert("Registration successful! Please login.");
+
+    showLogin();
+}
+
+// LOGIN
+
+function loginUser(event) {
+
+    event.preventDefault();
+
+    let email = document.getElementById("loginEmail").value.trim().toLowerCase();
+    let password = document.getElementById("loginPassword").value;
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    let validUser = users.find(user =>
+        user.email === email && user.password === password
+    );
+
+    if (validUser) {
+
+        sessionStorage.setItem("loggedIn", "true");
+        sessionStorage.setItem("userName", validUser.name);
+
+        openWebsite();
+
+    } else {
+
+        document.getElementById("authMessage").innerText =
+        "Invalid email or password! Please register first.";
+
+    }
+}
+
+// OPEN MAIN WEBSITE
+
+function openWebsite() {
+
+    document.getElementById("loginPage").style.display = "none";
+    document.getElementById("registerPage").style.display = "none";
+    document.getElementById("mainWebsite").style.display = "block";
+
+}
+
+// LOGOUT
+
+function logoutUser() {
+
+    sessionStorage.removeItem("loggedIn");
+    sessionStorage.removeItem("userName");
+
+    document.getElementById("mainWebsite").style.display = "none";
+    document.getElementById("loginPage").style.display = "flex";
+
+    document.getElementById("loginEmail").value = "";
+    document.getElementById("loginPassword").value = "";
+
+}
+
+// CHECK LOGIN SESSION
+
+window.onload = function() {
+
+    if (sessionStorage.getItem("loggedIn") === "true") {
+        openWebsite();
+    }
+
+};
+
+// FAKE NEWS DETECTION
+
+function detectNews() {
+
+    let news = document.getElementById("newsText")
+    .value.trim();
+
+    let result = document.getElementById("result");
+
+    if (news.length < 10) {
+        alert("Please enter a news article or headline.");
+        return;
+    }
+
+    let suspiciousWords = [
+        "shocking",
+        "100% guaranteed",
+        "secret revealed",
+        "share immediately",
+        "you won't believe",
+        "breaking!!!",
+        "forward to everyone",
+        "miracle cure"
+    ];
+
+    let lowerNews = news.toLowerCase();
+
+    let score = 0;
+
+    suspiciousWords.forEach(function(word) {
+        if (lowerNews.includes(word)) {
+            score++;
+        }
+    });
+
+    result.style.display = "block";
+
+    if (score > 0) {
+
+        result.style.background = "#fff3df";
+        result.style.color = "#895600";
+
+        result.innerHTML = `
+            <h3>⚠️ Suspicious Language Detected</h3>
+            <p>
+            Our basic text checker found ${score}
+            suspicious wording pattern(s).
+            </p>
+            <p>
+            This does NOT prove the news is fake.
+            Please verify it using trusted sources.
+            </p>
+        `;
+
+    } else {
+
+        result.style.background = "#e8f4ff";
+        result.style.color = "#174a70";
+
+        result.innerHTML = `
+            <h3>ℹ️ No Suspicious Pattern Found</h3>
+            <p>
+            Our basic checker did not find any
+            of its listed suspicious phrases.
+            </p>
+            <p>
+            This does NOT mean the news is genuine.
+            Check the original source, date and
+            supporting evidence before sharing.
+            </p>
+        `;
+    }
+
+    result.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+    });
+
+}
+
+</script>
+
+</body>
+</html>

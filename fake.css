@@ -1,0 +1,101 @@
+.{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7fb;
+    color:#222 ;
+}
+header{
+    background: #143d4e;
+    color: white;
+    padding: 20px;
+    display: 20px;
+    justify-content: space-between;
+    aligen-iteams:center;
+
+}
+header h1{
+    font-size: 23;
+}
+nav a{
+    color: wheat;
+    text-decoration: none;
+    margin: 10px;
+}
+      nav a:hover{
+        color:#00d4ff;
+      }  
+      .hero h2{
+        background: linear-gradient(120deg#142d4e,#247ba0):
+        color:white;
+        text-alige:center;
+        pedding;90px 20px;
+      }
+      .hero h2{
+        font-size: 18px;
+        margin-bottom: 25px;
+      }
+      .btn{
+        background: #00c9a7;
+        color:white;
+        padding: 12px 25px;
+        text-decoration: none;
+        border-radius: 6px;
+      }
+      .about,.detect{
+        text-align: center;
+        padding: 50px 20px;
+      }
+      .about p{
+        max-width: 650px;
+        margin: 20px auto;
+        line-height: 17;
+      }
+      textarea{
+        width:80%;
+        max-width: 550px;
+        height: 120px;
+        padding: 15px;
+        margin: 20px;
+        border: 1px solid#aaa;
+        border-radius: 8px;
+        font-size: 16px;
+      }
+      button{
+        display: block;
+        margin: auto;
+        background: #142d4e;
+        color: white;
+        padding: 13px 30px;
+        border: none;
+        border-radius: 6px;
+        cursor:pointer
+      }
+      button:hover{
+        background: #247ba0;
+      
+    .note{
+        margin: 15px;
+        font-size: 13px;
+        color: #555;
+    }
+    footer{
+        background: #142d4e;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        line-height: 1.8:
+    }
+    nav a{
+        margin: 5px;
+    }
+    .hero h2{
+        font-size: 30px;
+    }
+    textarea{
+        width: 95%;
+    }
+}
